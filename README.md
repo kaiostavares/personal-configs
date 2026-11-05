@@ -1,65 +1,42 @@
-# 🖥️ Terminal Config
+# Terminal Config
 
-Configuração pessoal do terminal para macOS (zsh) com equivalentes para Linux (bash). Mantido aqui para facilitar a migração entre máquinas e compartilhar com quem quiser uma experiência de terminal mais produtiva.
+Cópia da configuração pessoal de Zsh usada no macOS: Oh My Zsh, Starship, autocomplete com fzf-tab, sugestões e realce de sintaxe.
 
----
+## Instalar
 
-## ✨ O que está incluso
+Com [Homebrew](https://brew.sh/) e [Oh My Zsh](https://ohmyz.sh/) instalados:
 
-| Ferramenta | Função |
+```sh
+brew install starship eza bat fzf fd fzf-tab
+
+git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting"
+```
+
+Se os plugins já estiverem instalados, pule os comandos `git clone`. Use uma Nerd Font no terminal para exibir os ícones.
+
+Na pasta deste repositório, faça backup e aplique:
+
+```sh
+[ ! -f ~/.zshrc ] || cp ~/.zshrc ~/.zshrc.backup-$(date +%Y%m%d-%H%M%S)
+cp .zshrc ~/.zshrc
+exec zsh
+```
+
+Após atualizar o repo, repita a cópia para aplicar as mudanças.
+
+No Linux, use Zsh e instale as mesmas ferramentas. Ajuste os caminhos do NVM (`/opt/homebrew/opt/nvm`) e do AWS completer (`/usr/local/bin/aws_completer`) conforme a instalação. O fzf-tab depende do Homebrew. Use versões de fzf com suporte a `fzf --zsh`.
+
+## Uso rápido
+
+| Atalho | Ação |
 |---|---|
-| [Oh My Zsh](https://ohmyzsh.github.io/) | Framework de configuração para zsh |
-| [Starship](https://starship.rs/) | Prompt minimalista e rápido |
-| [eza](https://eza.rocks/) | Substituto moderno do `ls` (com ícones e cores) |
-| [bat](https://github.com/sharkdp/bat) | Substituto moderno do `cat` (com syntax highlight) |
-| [fzf](https://github.com/junegunn/fzf) | Fuzzy finder interativo |
-| [fd](https://github.com/sharkdp/fd) | Substituto moderno do `find` |
-| [NVM](https://github.com/nvm-sh/nvm) | Gerenciador de versões do Node.js |
-| [SDKMAN](https://sdkman.io/) | Gerenciador de versões do Java/Kotlin/Gradle |
+| `Tab` | Autocomplete com preview |
+| `Ctrl+T` / `Alt+C` / `Ctrl+R` | Buscar arquivos / diretórios / histórico |
+| `ls` / `lsa` | Listar arquivos / incluir ocultos |
+| `ll` / `la` / `lt` | Listagem detalhada / com ocultos / árvore |
+| `cat` | Exibir arquivo com realce de sintaxe |
+| `diff` | Executar `bat --diff --style=plain` |
+| `dow` / `hm` / `cl` | Downloads / home / limpar terminal |
 
-### Plugins Oh My Zsh
-
-- `git` — aliases e funções para git
-- `docker` / `docker-compose` — autocomplete para Docker
-- `node` / `npm` — autocomplete para Node
-- `gradle` — autocomplete para Gradle
-- `zsh-autosuggestions` — sugestões de comandos baseadas no histórico
-- `fzf-tab` — substitui o autocomplete padrão por um menu fzf
-- `fast-syntax-highlighting` — syntax highlighting em tempo real no terminal
-
----
-
-## 🔑 Aliases de referência rápida
-
-| Alias | Comando real | Descrição |
-|---|---|---|
-| `ls` | `eza --icons=always` | Listagem com ícones |
-| `lsa` | `eza -a --icons=always` | Inclui arquivos ocultos |
-| `ll` | `eza -l --icons=always` | Listagem detalhada |
-| `la` | `eza -la --icons=always` | Detalhada + ocultos |
-| `lt` | `eza --tree --icons=always` | Visualização em árvore |
-| `cat` | `bat --paging=never --style=plain` | Cat com syntax highlight sem decorações |
-| `diff` | `bat --diff --style=plain` | Diff com cores sem decorações |
-| `dow` | `cd ~/Downloads` | Atalho para Downloads |
-| `dev` | `cd ~/Developer` | Atalho para projetos |
-| `hm` | `cd ~` | Volta para home |
-| `cl` | `clear` | Limpa o terminal |
-
----
-
-## 📁 Estrutura do repositório
-
-```
-.
-├── .zshrc       # Configuração principal (macOS/zsh)
-└── README.md    # Este arquivo
-```
-
----
-
-## 💡 Dicas
-
-- Para ver os temas disponíveis do Oh My Zsh: `ls ~/.oh-my-zsh/themes/`
-- Para trocar o tema, edite a linha `ZSH_THEME="robbyrussell"` no `.zshrc`
-- O Starship tem sua própria configuração em `~/.config/starship.toml` — veja os [presets oficiais](https://starship.rs/presets/)
-- Para listar todos os aliases ativos: `alias`
+NVM, SDKMAN e autocomplete da AWS são carregados quando encontrados nos caminhos configurados. O prompt pode ser personalizado em `~/.config/starship.toml`.
